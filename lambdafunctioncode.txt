@@ -1,0 +1,23 @@
+exports.handler = async (event) => {
+  let name = "User";
+  try {
+    const body = typeof event.body === 'string' ? JSON.parse(event.body) : event.body;
+    name = body.name || "User";
+  } catch (error) {
+    console.error("Error parsing Data: ", error);
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: "Invalid request body" })
+    }
+  }
+    return {
+      statusCode: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        message: `Thanks ${name}, We recieved your message!`,
+      })
+    }
+  }
